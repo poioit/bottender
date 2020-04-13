@@ -142,6 +142,41 @@ class MessengerContext extends Context<MessengerClient, MessengerEvent> {
     return this._callClientMethod('sendText', args);
   }
 
+  async sendGenericTemplate(options?: Record<string, any>): Promise<any> {
+    if (!this._session) {
+      warning(
+        false,
+        'sendText: should not be called in context without session'
+      );
+      return;
+    }
+
+    if (this._event.isEcho || this._event.isDelivery || this._event.isRead) {
+      warning(
+        false,
+        'sendText: calling Send APIs in `message_reads`(event.isRead), `message_deliveries`(event.isDelivery) or `message_echoes`(event.isEcho) events may cause endless self-responding, so they are ignored by default.\nYou may like to turn off subscription of those events or handle them without Send APIs.'
+      );
+      return;
+    }
+
+    const messagingType =
+      options && 'tag' in options ? 'MESSAGE_TAG' : 'RESPONSE';
+
+    const args = [
+      this._session.user.id,
+      {
+        messagingType,
+        ...(this._customAccessToken
+          ? { accessToken: this._customAccessToken }
+          : undefined),
+        ...(this._personaId ? { personaId: this._personaId } : undefined),
+        ...options,
+      },
+    ];
+
+    return this._callClientMethod('sendGenericTemplate', args);
+  }
+
   async getUserProfile(options: {
     fields?: MessengerTypes.UserProfileField[];
   }): Promise<MessengerTypes.User | null> {
