@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@bottender/workspace",
+  "name": "@poioit/bottender4tp",
   "description": "A framework for building conversational user interfaces.",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
@@ -8,6 +8,7 @@
     "type": "git",
     "url": "https://github.com/Yoctol/bottender.git"
   },
+  "version": "0.0.0",
   "workspaces": [
     "packages/*"
   ],
