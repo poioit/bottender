@@ -1,6 +1,6 @@
 {
   "private": true,
-  "name": "@poioit/bottender4tp",
+  "name": "@bottender/workspace",
   "description": "A framework for building conversational user interfaces.",
   "license": "MIT",
   "homepage": "https://bottender.js.org/",
